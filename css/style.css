@@ -238,3 +238,46 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
   .sections { gap: 0; }
   .sections a { padding-left: 9px; padding-right: 9px; font-size: 14px; letter-spacing: .06em; }
 }
+
+/* ---------- Opening crawl ---------- */
+.crawl {
+  position: relative; height: 420px; margin: 0 0 20px; overflow: hidden;
+  border: 1px solid var(--rule); perspective: 340px; perspective-origin: 50% 0;
+  background:
+    radial-gradient(1px 1px at 8% 20%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 22% 70%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 37% 35%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 51% 12%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 64% 82%, #fff, transparent 60%),
+    radial-gradient(1.5px 1.5px at 78% 28%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 91% 64%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 15% 92%, #fff, transparent 60%),
+    radial-gradient(1px 1px at 86% 8%, #fff, transparent 60%),
+    #000;
+}
+.crawl-track {
+  position: absolute; inset: 0; transform-origin: 50% 100%; transform: rotateX(28deg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 45%); mask-image: linear-gradient(to bottom, transparent 0, #000 45%);
+}
+.crawl-text {
+  position: absolute; left: 50%; width: min(78%, 620px); margin-left: calc(min(78%, 620px) / -2);
+  color: #ffe81f; font: 700 clamp(18px, 2.6vw, 26px)/1.45 'News Cycle', 'Franklin Gothic Medium', Arial, sans-serif;
+  text-align: justify; animation: crawl 48s linear infinite;
+}
+.crawl-text p { margin: 0 0 1.1em; }
+.crawl-text .crawl-episode, .crawl-text .crawl-title { text-align: center; margin: 0; }
+.crawl-text .crawl-episode { font-weight: 400; letter-spacing: .06em; }
+.crawl-text .crawl-title { margin: .1em 0 1.1em; font-size: 1.7em; line-height: 1.1; text-transform: uppercase; letter-spacing: .04em; }
+@keyframes crawl {
+  from { top: 100%; transform: translateY(0); }
+  to { top: 0; transform: translateY(-100%); }
+}
+@media (max-width: 640px) {
+  .crawl { height: 340px; perspective: 260px; }
+  .crawl-text { width: 86%; margin-left: -43%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crawl { height: auto; perspective: none; padding: 28px 0; }
+  .crawl-track { position: static; transform: none; -webkit-mask-image: none; mask-image: none; }
+  .crawl-text { position: static; margin: 0 auto; animation: none; }
+}

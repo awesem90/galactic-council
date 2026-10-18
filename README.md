@@ -34,6 +34,7 @@ The front page is a newspaper: the written reports from `data/articles.json`, st
   "byline": "By our correspondent at Mecatol Rex",
   "image": "assets/articles/empyrean-rules-the-galaxy.jpg",
   "caption": "Photo caption.",
+  "crawl": { "episode": "Episode XI", "title": "Optional opening crawl", "text": ["A paragraph that scrolls away into space."] },
   "body": ["A paragraph. *Faction names* in asterisks become italics.", { "head": "A subheading" }, { "quote": "A pull quote." }],
   "numbers": [["Factions in contention", "7"]]
 }

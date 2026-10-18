@@ -234,6 +234,16 @@ const weekday = iso => { const [y, m, d] = iso.split('-').map(Number); return WE
 // *text* in article copy becomes italics; everything else is escaped.
 const inline = s => esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
+// An opening crawl, scrolling away into space (static when the reader prefers less motion).
+const crawl = c => `
+  <div class="crawl">
+    <div class="crawl-track"><div class="crawl-text">
+      ${c.episode ? `<p class="crawl-episode">${esc(c.episode)}</p>` : ''}
+      <p class="crawl-title">${esc(c.title)}</p>
+      ${c.text.map(t => `<p>${esc(t)}</p>`).join('')}
+    </div></div>
+  </div>`;
+
 function story(a, lead) {
   const body = a.body.map(b => typeof b === 'string' ? `<p>${inline(b)}</p>`
     : b.head ? `<h3>${inline(b.head)}</h3>`
@@ -244,6 +254,7 @@ function story(a, lead) {
     <h2 class="headline">${inline(a.headline)}</h2>
     ${a.deck ? `<p class="deck">${inline(a.deck)}</p>` : ''}
     ${a.byline ? `<p class="byline">${esc(a.byline)}</p>` : ''}
+    ${a.crawl ? crawl(a.crawl) : ''}
     ${a.image ? `<figure class="art"><img src="${esc(a.image)}" alt="${esc(a.caption || '')}" loading="lazy">${a.caption ? `<figcaption>${inline(a.caption)}</figcaption>` : ''}</figure>` : ''}
     <div class="copy">${body}</div>
     ${a.numbers?.length ? `<aside class="numbers"><h4>By the numbers</h4><dl>${a.numbers.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></aside>` : ''}
