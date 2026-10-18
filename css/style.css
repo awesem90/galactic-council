@@ -200,14 +200,9 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
   font-family: var(--serif);
 }
 .paper a { color: inherit; }
-.paper-head { text-align: center; }
+.paper-head { text-align: center; border-bottom: 1px solid var(--rule); }
 .paper-name { margin: 0; font: 800 clamp(30px, 7.5vw, 76px)/1 var(--display); letter-spacing: .02em; }
 .paper-motto { margin: 8px 0 14px; font: italic 15px var(--serif); color: var(--newsgray); }
-.paper-dateline {
-  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  padding: 6px 0; border-top: 3px double var(--rule); border-bottom: 3px double var(--rule);
-  font: 700 12px var(--serif); letter-spacing: .08em;
-}
 
 .story { padding: 26px 0 30px; border-bottom: 3px double var(--rule); }
 .story:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -237,7 +232,6 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
 .numbers dd { margin: 0; font: 900 24px var(--head); }
 
 @media (max-width: 760px) {
-  .paper-dateline { justify-content: center; text-align: center; }
   .copy { text-align: left; font-size: 16px; }
 }
 @media (max-width: 420px) {

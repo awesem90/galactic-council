@@ -231,7 +231,6 @@ export const errorPanel = msg => `<div class="error"><h2>The Council could not c
 // ---------- Front page: a newspaper, newest article on top ----------
 const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const weekday = iso => { const [y, m, d] = iso.split('-').map(Number); return WEEKDAYS[new Date(y, m - 1, d).getDay()]; };
-const roman = n => [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']].reduce((s, [v, r]) => { while (n >= v) { s += r; n -= v; } return s; }, '');
 // *text* in article copy becomes italics; everything else is escaped.
 const inline = s => esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>');
 
@@ -251,21 +250,12 @@ function story(a, lead) {
   </article>`;
 }
 
-export function frontPage(st, articles = []) {
-  const all = st.allGames;
-  const latest = all[all.length - 1];
-  const issueDate = articles[0]?.date || latest?.date;
-  const vol = all.length ? roman(+issueDate.slice(0, 4) - +all[0].date.slice(0, 4) + 1) : 'I';
+export function frontPage(articles = []) {
   return `
   <div class="paper">
     <header class="paper-head">
       <p class="paper-name">${esc(CONFIG.title)}</p>
       <p class="paper-motto">“${esc(CONFIG.motto)}”</p>
-      <div class="paper-dateline">
-        <span>VOL. ${vol} · No. ${all.length}</span>
-        <span>${esc(CONFIG.dateline)}${issueDate ? ', ' + (weekday(issueDate) + ' ' + longDate(issueDate)).toUpperCase() : ''}</span>
-        <span>${esc(CONFIG.price)}</span>
-      </div>
     </header>
     ${articles.length ? articles.map((a, i) => story(a, i === 0)).join('') : '<p class="empty">No reports filed yet.</p>'}
   </div>`;

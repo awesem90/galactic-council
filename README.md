@@ -60,7 +60,7 @@ Put images in `assets/articles/` (a JPG around 1600 px wide works well). Source 
 
 ## Pages
 
-- **Front Page**: the newspaper, with every article newest first, under a masthead and dateline.
+- **Front Page**: the newspaper, with every article newest first, under the masthead.
 - **Assembly**: the lead story (generated from the stats), key figures, the standings, notes from the minutes (closest finish, near misses, the speaker's edge…), the latest session, faction power and the head-to-head table.
 - **Delegates**: a profile per player, with wins, average VP and place, near misses, factions played, how often they finished above each other delegate, and every session.
 - **Factions**: every faction fielded, by wins and win rate, with the average length of its sessions and who played it, plus the factions that have yet to take a seat.

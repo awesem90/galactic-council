@@ -49,7 +49,7 @@ function render() {
   } else if (r.screen === 'overview') {
     body = overview(st); title = 'Assembly';
   } else {
-    body = frontPage(st, state.council.articles);
+    body = frontPage(state.council.articles);
   }
   document.title = (title ? title + ' · ' : '') + CONFIG.title;
   app.innerHTML = header(st, r.screen) + `<main>${body}</main>` + footer(state.council.generated);
