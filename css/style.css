@@ -49,7 +49,8 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
 .seal { width: 52px; height: 52px; color: var(--gold); flex: none; }
 .brand b { display: block; font: 800 clamp(22px, 3.4vw, 32px)/1.05 var(--display); letter-spacing: .04em; color: var(--gold); }
 .brand small { display: block; margin-top: 4px; color: var(--muted); font: 500 14px var(--cond); letter-spacing: .08em; text-transform: uppercase; }
-.sections { grid-column: 1 / -1; display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; }
+.sections { grid-column: 1 / -1; display: flex; gap: 4px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.sections::-webkit-scrollbar { display: none; }
 .sections a {
   padding: 10px 14px 9px; color: var(--muted); border-bottom: 2px solid transparent;
   font: 600 15px var(--cond); letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
@@ -246,4 +247,8 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
   .briefs a:nth-child(n+3) { border-top: 1px solid rgba(28, 25, 19, .3); }
   .paper-dateline { justify-content: center; text-align: center; }
   .copy { text-align: left; font-size: 16px; }
+}
+@media (max-width: 420px) {
+  .sections { gap: 0; }
+  .sections a { padding-left: 9px; padding-right: 9px; font-size: 14px; letter-spacing: .06em; }
 }
