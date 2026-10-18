@@ -42,8 +42,9 @@ export function computeStats(allGames, { range }) {
       pf.games++; pf.vp.push(s.vp); if (s.win) pf.wins++;
       p.factions.set(s.faction, pf);
 
-      const f = F.get(s.faction) || { name: s.faction, games: 0, wins: 0, vp: [], pilots: new Map(), last: '' };
+      const f = F.get(s.faction) || { name: s.faction, games: 0, wins: 0, vp: [], minutes: [], pilots: new Map(), last: '' };
       f.games++; f.vp.push(s.vp); if (s.win) f.wins++;
+      if (g.minutes) f.minutes.push(g.minutes);
       f.last = g.date;
       const pl = f.pilots.get(s.player) || { name: s.player, games: 0, wins: 0 };
       pl.games++; if (s.win) pl.wins++;
@@ -69,10 +70,10 @@ export function computeStats(allGames, { range }) {
   const factions = [...F.values()].map(f => ({
     ...f,
     rate: pct(f.wins, f.games),
-    avgVp: mean(f.vp),
+    avgMinutes: Math.round(mean(f.minutes)),
     bestVp: Math.max(...f.vp),
     pilotList: [...f.pilots.values()].sort((a, b) => b.games - a.games || a.name.localeCompare(b.name)),
-  })).sort((a, b) => b.wins - a.wins || b.avgVp - a.avgVp || b.games - a.games || a.name.localeCompare(b.name));
+  })).sort((a, b) => b.wins - a.wins || b.rate - a.rate || b.games - a.games || a.name.localeCompare(b.name));
   const unplayed = Object.keys(FACTIONS).filter(n => !F.has(n));
 
   // ----- Head to head: how often A finished above B when both sat at the table -----

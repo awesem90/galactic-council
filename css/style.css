@@ -208,11 +208,6 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
   padding: 6px 0; border-top: 3px double var(--rule); border-bottom: 3px double var(--rule);
   font: 700 12px var(--serif); letter-spacing: .08em;
 }
-.briefs { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
-.briefs a { padding: 10px 12px; border-left: 1px solid rgba(28, 25, 19, .3); font-size: 15px; }
-.briefs a:first-child { border-left: 0; padding-left: 0; }
-.briefs a:hover { text-decoration: none; background: rgba(28, 25, 19, .05); }
-.briefs b { display: block; font: 700 11px var(--serif); letter-spacing: .12em; text-transform: uppercase; color: var(--newsgray); }
 
 .story { padding: 26px 0 30px; border-bottom: 3px double var(--rule); }
 .story:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -242,9 +237,6 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 20px 48px; }
 .numbers dd { margin: 0; font: 900 24px var(--head); }
 
 @media (max-width: 760px) {
-  .briefs { grid-template-columns: 1fr 1fr; }
-  .briefs a:nth-child(3) { border-left: 0; padding-left: 0; }
-  .briefs a:nth-child(n+3) { border-top: 1px solid rgba(28, 25, 19, .3); }
   .paper-dateline { justify-content: center; text-align: center; }
   .copy { text-align: left; font-size: 16px; }
 }

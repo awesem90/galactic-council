@@ -2,7 +2,7 @@
   "articles": [
     {
       "id": "2026-10-fall-of-argent",
-      "date": "2026-10-18",
+      "date": "2026-10-17",
       "kicker": "Session report",
       "headline": "Empyrean Seizes the Galaxy Through Mallice",
       "deck": "Argent sat on eight points and waited for the end. It came, just not for them.",
@@ -24,10 +24,11 @@
         "The lesson for the galaxy: never count your victory points before someone steals a planet from another dimension."
       ],
       "numbers": [
-        ["Factions in contention", "7"],
+        ["Factions at the table", "7"],
         ["Argent's points while waiting", "8"],
         ["Planet that decided it", "Mallice"],
-        ["Winner", "Empyrean"]
+        ["Winner", "Sem, with Empyrean"],
+        ["At the table", "12h 04m"]
       ]
     }
   ]

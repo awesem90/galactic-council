@@ -195,8 +195,8 @@ export function profile(st, name) {
 // ---------- Factions ----------
 function factionTable(list, compact = false) {
   return `<table class="table factions">
-    <thead><tr><th class="l">Faction</th><th title="Times fielded">Fielded</th><th>Wins</th><th>Win %</th><th>Avg VP</th>${compact ? '' : '<th>Best</th><th class="l">Delegates</th><th class="l">Last fielded</th>'}</tr></thead>
-    <tbody>${list.map(f => `<tr><td class="l">${fx(f.name, true)}</td><td>${f.games}</td><td class="b">${f.wins}</td><td>${f.rate}</td><td>${dec1(f.avgVp)}</td>
+    <thead><tr><th class="l">Faction</th><th title="Times fielded">Fielded</th><th>Wins</th><th>Win %</th><th title="Average length of the sessions it played in">Avg time</th>${compact ? '' : '<th title="Highest victory points scored with it">Best VP</th><th class="l">Delegates</th><th class="l">Last fielded</th>'}</tr></thead>
+    <tbody>${list.map(f => `<tr><td class="l">${fx(f.name, true)}</td><td>${f.games}</td><td class="b">${f.wins}</td><td>${f.rate}</td><td>${f.avgMinutes ? fmtMinutes(f.avgMinutes) : "—"}</td>
       ${compact ? '' : `<td>${f.bestVp}</td><td class="l pilots">${f.pilotList.map(pl => `${who(pl.name)}${pl.games > 1 ? ` <small>×${pl.games}</small>` : ''}`).join(', ')}</td><td class="l">${shortDate(f.last)}</td>`}</tr>`).join('')}</tbody>
   </table>`;
 }
@@ -206,7 +206,7 @@ export function factions(st) {
   <section class="hero small">
     <p class="kicker">Factions</p>
     <h1>${plural(st.factions.length, 'faction')} have taken a seat</h1>
-    <p class="lede">Sorted by wins, then average victory points, ${scope(st)}.</p>
+    <p class="lede">Sorted by wins, then win rate, ${scope(st)}. Avg time is the average length of the sessions a faction played in.</p>
   </section>
   <section class="block"><div class="scroll">${factionTable(st.factions)}</div></section>
   ${st.unplayed.length ? `<section class="block">${sectionHead('Yet to take a seat')}<p class="unplayed">${st.unplayed.map(n => fx(n, true)).join(' ')}</p></section>` : ''}`;
@@ -254,15 +254,8 @@ function story(a, lead) {
 export function frontPage(st, articles = []) {
   const all = st.allGames;
   const latest = all[all.length - 1];
-  const leader = st.players[0];
   const issueDate = articles[0]?.date || latest?.date;
   const vol = all.length ? roman(+issueDate.slice(0, 4) - +all[0].date.slice(0, 4) + 1) : 'I';
-  const briefs = [
-    leader && `<a href="#/assembly"><b>Council leader</b>${esc(leader.name)}, ${plural(leader.wins, 'win')}</a>`,
-    latest?.winner && `<a href="#/sessions"><b>Last recorded</b>${esc(latest.winner.player)} with ${esc(faction(latest.winner.faction).short)}</a>`,
-    `<a href="#/factions"><b>Factions fielded</b>${st.factions.length} of ${st.factions.length + st.unplayed.length}</a>`,
-    `<a href="#/sessions"><b>On record</b>${plural(all.length, 'session')}</a>`,
-  ].filter(Boolean);
   return `
   <div class="paper">
     <header class="paper-head">
@@ -274,7 +267,6 @@ export function frontPage(st, articles = []) {
         <span>${esc(CONFIG.price)}</span>
       </div>
     </header>
-    <nav class="briefs" aria-label="In this edition">${briefs.join('')}</nav>
     ${articles.length ? articles.map((a, i) => story(a, i === 0)).join('') : '<p class="empty">No reports filed yet.</p>'}
   </div>`;
 }
