@@ -38,13 +38,13 @@ const figure = (value, label, note = '') => `<div class="figure"><b>${value}</b>
 
 // ---------- Header ----------
 export function header(st, screen) {
-  const nav = [['overview', '#/', 'Assembly'], ['delegate', '#/delegate', 'Delegates'], ['factions', '#/factions', 'Factions'], ['sessions', '#/sessions', 'Sessions']];
+  const nav = [['front', '#/', 'Front Page'], ['overview', '#/assembly', 'Assembly'], ['delegate', '#/delegate', 'Delegates'], ['factions', '#/factions', 'Factions'], ['sessions', '#/sessions', 'Sessions']];
   const editions = [['all', 'All sessions'], ['last', 'Last ' + CONFIG.lastN]];
   return `
   <header class="top">
     <a class="brand" href="#/">${SEAL}<span><b>${esc(CONFIG.title)}</b><small>${esc(CONFIG.motto)}</small></span></a>
     <nav class="sections" aria-label="Sections">${nav.map(([key, href, label]) => `<a href="${href}" class="${screen === key ? 'active' : ''}">${label}</a>`).join('')}</nav>
-    ${st ? `<div class="edition" role="group" aria-label="Range">${editions.map(([key, label]) =>
+    ${st && screen !== 'front' ? `<div class="edition" role="group" aria-label="Range">${editions.map(([key, label]) =>
       `<button data-range="${key}" class="${st.range === key ? 'active' : ''}" aria-pressed="${st.range === key}">${esc(label)}</button>`).join('')}</div>` : ''}
   </header>`;
 }
@@ -227,3 +227,54 @@ export function sessions(st, name) {
 // ---------- States ----------
 export const skeleton = () => `<p class="empty">Convening the Council…</p>`;
 export const errorPanel = msg => `<div class="error"><h2>The Council could not convene</h2><p>${esc(msg)}</p></div>`;
+
+// ---------- Front page: a newspaper, newest article on top ----------
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const weekday = iso => { const [y, m, d] = iso.split('-').map(Number); return WEEKDAYS[new Date(y, m - 1, d).getDay()]; };
+const roman = n => [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']].reduce((s, [v, r]) => { while (n >= v) { s += r; n -= v; } return s; }, '');
+// *text* in article copy becomes italics; everything else is escaped.
+const inline = s => esc(s).replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+function story(a, lead) {
+  const body = a.body.map(b => typeof b === 'string' ? `<p>${inline(b)}</p>`
+    : b.head ? `<h3>${inline(b.head)}</h3>`
+    : `<blockquote class="pull">${inline(b.quote)}</blockquote>`).join('');
+  return `
+  <article class="story${lead ? ' lead' : ''}">
+    <p class="kicker">${esc(a.kicker || 'Report')} · ${weekday(a.date)} ${longDate(a.date)}</p>
+    <h2 class="headline">${inline(a.headline)}</h2>
+    ${a.deck ? `<p class="deck">${inline(a.deck)}</p>` : ''}
+    ${a.byline ? `<p class="byline">${esc(a.byline)}</p>` : ''}
+    ${a.image ? `<figure class="art"><img src="${esc(a.image)}" alt="${esc(a.caption || '')}" loading="lazy">${a.caption ? `<figcaption>${inline(a.caption)}</figcaption>` : ''}</figure>` : ''}
+    <div class="copy">${body}</div>
+    ${a.numbers?.length ? `<aside class="numbers"><h4>By the numbers</h4><dl>${a.numbers.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl></aside>` : ''}
+  </article>`;
+}
+
+export function frontPage(st, articles = []) {
+  const all = st.allGames;
+  const latest = all[all.length - 1];
+  const leader = st.players[0];
+  const issueDate = articles[0]?.date || latest?.date;
+  const vol = all.length ? roman(+issueDate.slice(0, 4) - +all[0].date.slice(0, 4) + 1) : 'I';
+  const briefs = [
+    leader && `<a href="#/assembly"><b>Council leader</b>${esc(leader.name)}, ${plural(leader.wins, 'win')}</a>`,
+    latest?.winner && `<a href="#/sessions"><b>Last recorded</b>${esc(latest.winner.player)} with ${esc(faction(latest.winner.faction).short)}</a>`,
+    `<a href="#/factions"><b>Factions fielded</b>${st.factions.length} of ${st.factions.length + st.unplayed.length}</a>`,
+    `<a href="#/sessions"><b>On record</b>${plural(all.length, 'session')}</a>`,
+  ].filter(Boolean);
+  return `
+  <div class="paper">
+    <header class="paper-head">
+      <p class="paper-name">${esc(CONFIG.title)}</p>
+      <p class="paper-motto">“${esc(CONFIG.motto)}”</p>
+      <div class="paper-dateline">
+        <span>VOL. ${vol} · No. ${all.length}</span>
+        <span>${esc(CONFIG.dateline)}${issueDate ? ', ' + (weekday(issueDate) + ' ' + longDate(issueDate)).toUpperCase() : ''}</span>
+        <span>${esc(CONFIG.price)}</span>
+      </div>
+    </header>
+    <nav class="briefs" aria-label="In this edition">${briefs.join('')}</nav>
+    ${articles.length ? articles.map((a, i) => story(a, i === 0)).join('') : '<p class="empty">No reports filed yet.</p>'}
+  </div>`;
+}

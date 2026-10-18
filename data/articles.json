@@ -1,0 +1,34 @@
+{
+  "articles": [
+    {
+      "id": "2026-10-fall-of-argent",
+      "date": "2026-10-18",
+      "kicker": "Session report",
+      "headline": "Empyrean Seizes the Galaxy Through Mallice",
+      "deck": "Argent sat on eight points and waited for the end. It came, just not for them.",
+      "byline": "By our correspondent at Mecatol Rex",
+      "image": "assets/articles/empyrean-rules-the-galaxy.jpg",
+      "caption": "Artist's impression: the Empyrean rise over the galaxy through the Mallice wormhole, while Argent's wall looks the wrong way.",
+      "body": [
+        "The galaxy was on a knife's edge. Seven factions stood within striking distance of victory, and for once nobody was out of the running. Every fleet movement mattered, every secret objective could decide the game, and every alliance was one betrayal away from collapse.",
+        "The *Argent Flight* believed the game was already won. On eight points, they parked the bus, dug in behind their fleets and waited for the galaxy to catch up. Surely no one could stop them now.",
+        "The Council grew suspicious and tried to intervene, but Argent's plans were so well hidden that even its wisest politicians could not work out what on earth they were up to. By the time anyone understood the threat, it might already be too late.",
+        { "head": "Suffering and shooting" },
+        "Elsewhere, the *Xxcha Kingdom* learned the true meaning of suffering. Denied Leadership and strangled at the source, its grand ambitions shrank to watching others play the game it had hoped to control.",
+        "The *L1Z1X Mindnet* kept to a simpler school of diplomacy: shoot first, ask questions never. Fleets burned, borders shifted, and nobody could be sure who was next. Perhaps not even L1Z1X.",
+        { "head": "The plot around Mallice" },
+        "But the strangest conspiracy was unfolding around Mallice. Conquered by the relentless *Naaz-Rokha Alliance*, the *Empyrean* seemed bound for the history books.",
+        "Then, from the ashes of defeat, they found an unlikely instrument: the *Mahact Gene-Sorcerers*. Manipulated into clearing the path to Mallice, Mahact became the unwitting architect of Empyrean's return. The route was open, the pieces were in place, and almost nobody saw it coming.",
+        { "quote": "One moment, Argent had the game in the bag. The next, Empyrean had won." },
+        "While Argent sat comfortably behind its wall, convinced the galaxy had no answer, Empyrean struck. Mallice fell into their hands, and with it the game. There was no drawn-out endgame, no last-minute rescue at the negotiating table, and no time left for the Council to crack the plot.",
+        "The lesson for the galaxy: never count your victory points before someone steals a planet from another dimension."
+      ],
+      "numbers": [
+        ["Factions in contention", "7"],
+        ["Argent's points while waiting", "8"],
+        ["Planet that decided it", "Mallice"],
+        ["Winner", "Empyrean"]
+      ]
+    }
+  ]
+}

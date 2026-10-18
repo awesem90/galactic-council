@@ -1,7 +1,7 @@
 import { fetchCouncil, cachedCouncil } from './data.js';
 import { computeStats } from './stats.js';
 import { CONFIG } from './config.js';
-import { header, footer, overview, profile, factions, sessions, skeleton, errorPanel } from './render.js';
+import { header, footer, frontPage, overview, profile, factions, sessions, skeleton, errorPanel } from './render.js';
 
 const app = document.getElementById('app');
 const pref = {
@@ -26,7 +26,8 @@ function route() {
   if (page === 'delegate') return { screen: 'delegate', name: arg || null };
   if (page === 'sessions') return { screen: 'sessions', name: arg || null };
   if (page === 'factions') return { screen: 'factions' };
-  return { screen: 'overview' };
+  if (page === 'assembly') return { screen: 'overview' };
+  return { screen: 'front' };
 }
 
 function render() {
@@ -45,8 +46,10 @@ function render() {
     body = sessions(st, r.name); title = 'Sessions';
   } else if (r.screen === 'factions') {
     body = factions(st); title = 'Factions';
+  } else if (r.screen === 'overview') {
+    body = overview(st); title = 'Assembly';
   } else {
-    body = overview(st);
+    body = frontPage(st, state.council.articles);
   }
   document.title = (title ? title + ' · ' : '') + CONFIG.title;
   app.innerHTML = header(st, r.screen) + `<main>${body}</main>` + footer(state.council.generated);
